@@ -34,5 +34,22 @@ it('contains a fieldset and legend with the correct text', () => {
     expect(legend.children[0]).toBe(instance.state.select_type);
 });
 
+it('contains a radio button and label for website search', () => {
+    const website_search_radio = test_instance.findByProps({ id: 'website_search'});
+    expect(website_search_radio.type).toBe('input');
+
+    const website_search_label = test_instance.findByProps({ htmlFor: 'website_search'});
+    expect(website_search_label.type).toBe('label');
+});
+
+it('contains a radio button and label for discovery search', () => {
+    const discovery_search_radio = test_instance.findByProps({ id: 'discovery_search'});
+    expect(discovery_search_radio.type).toBe('input');
+
+    const discovery_search_label = test_instance.findByProps({ htmlFor: 'discovery_search'});
+    expect(discovery_search_label.type).toBe('label');
+});
+
+
 
 
