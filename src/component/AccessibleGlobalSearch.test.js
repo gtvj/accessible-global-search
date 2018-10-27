@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ShallowRenderer from 'react-test-renderer/shallow';
+import TestRenderer from 'react-test-renderer';
 import AccessibleGlobalSearch from './AccessibleGlobalSearch';
+
+const test_renderer = TestRenderer.create(<AccessibleGlobalSearch/>);
+const test_instance = test_renderer.root;
+const instance = test_renderer.getInstance();
 
 it('renders without crashing', () => {
     const div = document.createElement('div');
@@ -9,13 +13,23 @@ it('renders without crashing', () => {
     ReactDOM.unmountComponentAtNode(div);
 });
 
-it('renders a form with the correct props.className', () => {
-    const renderer = new ShallowRenderer();
-    renderer.render(<AccessibleGlobalSearch/>);
-    const result = renderer.getRenderOutput();
-    
-    expect(result.type).toBe('form');
-    expect(result.props.className).toBe('global-search-js');
+it('has the correct props', () => {
+    expect(instance.state.select_type).toBe('Select a search type');
+});
+
+it('renders a form with the correct className', () => {
+    const rendered_component = test_renderer.toJSON();
+    expect(rendered_component.type).toBe('form');
+    expect(rendered_component.props.className).toBe('global-search-js');
+});
+
+it('contains a fieldset and legend with the correct text', () => {
+    const fieldset = test_instance.findByType('fieldset');
+    expect(fieldset.type).toBe('fieldset');
+
+    const legend = test_instance.findByType('legend');
+    expect(legend.type).toBe('legend');
+    expect(legend.children[0]).toBe(instance.state.select_type);
 
 });
 
