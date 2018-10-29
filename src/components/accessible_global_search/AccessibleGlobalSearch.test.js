@@ -15,8 +15,6 @@ it('renders without crashing', () => {
 
 it('has the correct props', () => {
     expect(instance.state.search_options.select_type).toBe('Select a search type');
-    expect(instance.state.website_search_url).toBe('http://www.nationalarchives.gov.uk/search/results');
-    expect(instance.state.discovery_search_url).toBe('http://discovery.nationalarchives.gov.uk/results/');
 });
 
 it('renders a form with the correct className and action', () => {
@@ -74,7 +72,7 @@ it(`contains a labelled search element with the correct properties`, () => {
     const search_field = fieldset.findByProps({role: 'search'});
     expect(search_field.props.type).toBe('search'); // This tests the 'type' attribute
     expect(search_field.type).toBe('input');
-    expect(search_field.props['aria-label']).toBe(instance.state.active_search_label);
+    expect(search_field.props['aria-label']).toBe(instance.state.active_search.label);
 });
 
 

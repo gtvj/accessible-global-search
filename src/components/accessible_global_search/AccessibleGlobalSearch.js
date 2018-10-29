@@ -10,50 +10,42 @@ class AccessibleGlobalSearch extends Component {
         this.handle_search_selection = this.handle_search_selection.bind(this);
         this.state = {
 
-            active_search_url: 'http://www.nationalarchives.gov.uk/search/results',
-            active_search_label: 'Search the website',
+            active_search: {}, // This is assigned to the first option below
 
-            search_query: 'Enter search term',
-            website_search_url: 'http://www.nationalarchives.gov.uk/search/results',
-            discovery_search_url: 'http://discovery.nationalarchives.gov.uk/results/',
+            search_query_legend: 'Enter search term',
             search_options: {
                 group_name: 'search_type',
                 select_type: 'Select a search type',
                 options: [
                     {
-                        label: 'Search Discovery',
-                        id: 'discovery_search'
+                        label: 'Search the website',
+                        id: 'website_search',
+                        url: 'http://www.nationalarchives.gov.uk/search/results'
                     },
                     {
-                        label: 'Search the website',
-                        id: 'website_search'
+                        label: 'Search Discovery',
+                        id: 'discovery_search',
+                        url: 'http://discovery.nationalarchives.gov.uk/results/r'
                     }
                 ]
             }
-        }
+        };
+
+        this.state.active_search = this.state.search_options.options[0];
     }
 
     handle_search_selection(e) {
-        console.log(`The element was ${e.target.id}`);
-
-        if (e.target.id === 'discovery_search') {
-            this.setState({
-                active_search_url: this.state.discovery_search_url,
-                active_search_label: 'Search Discovery'
-                });
-        }
-
-        if (e.target.id === 'website_search') {
-            this.setState({
-                active_search_url: this.state.website_search_url,
-                active_search_label: 'Search the website'
+        if (e.target.type === 'radio') {
+            let selection = this.state.search_options.options.find((i) => {
+                return (e.target.id === i.id);
             });
+            this.setState({active_search: selection});
         }
     }
 
     render() {
         return (
-            <form role="search" className="global-search-js" action={this.state.active_search_url}
+            <form role="search" className="global-search-js" action={this.state.active_search.url}
                   onChange={this.handle_search_selection}>
                 <fieldset id="select-search-type">
                     <legend>{this.state.search_options.select_type}</legend>
@@ -61,8 +53,9 @@ class AccessibleGlobalSearch extends Component {
                                   options={this.state.search_options.options}/>
                 </fieldset>
                 <fieldset id="search-query">
-                    <legend>{this.state.search_query}</legend>
-                    <input type="search" role="search" aria-label={this.state.active_search_label}/>
+                    <legend>{this.state.search_query_legend}</legend>
+                    <input type="search" role="search" name="_q" aria-label={this.state.active_search.label}/>
+                    <input type="submit"/>
                 </fieldset>
             </form>
         );
