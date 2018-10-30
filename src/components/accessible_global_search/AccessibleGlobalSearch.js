@@ -12,6 +12,7 @@ class AccessibleGlobalSearch extends Component {
 
             active_search: {}, // This is assigned to the first option below
 
+            component_label: 'Search our website or catalogue',
             search_query_legend: 'Enter search term',
             search_options: {
                 group_name: 'search_type',
@@ -23,7 +24,7 @@ class AccessibleGlobalSearch extends Component {
                         url: 'http://www.nationalarchives.gov.uk/search/results'
                     },
                     {
-                        label: 'Search Discovery',
+                        label: 'Search Discovery, our catalogue',
                         id: 'discovery_search',
                         url: 'http://discovery.nationalarchives.gov.uk/results/r'
                     }
@@ -45,8 +46,9 @@ class AccessibleGlobalSearch extends Component {
 
     render() {
         return (
-            <form role="search" className="global-search-js" action={this.state.active_search.url}
+            <form aria-labelledby="global_search_label" role="search" className="global-search-js" action={this.state.active_search.url}
                   onChange={this.handle_search_selection}>
+                <span id="global_search_label">{this.state.component_label}</span>
                 <fieldset id="select-search-type">
                     <legend>{this.state.search_options.select_type}</legend>
                     <SearchOption group_name={this.state.search_options.group_name}
