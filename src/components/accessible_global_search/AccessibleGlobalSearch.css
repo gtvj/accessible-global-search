@@ -1,0 +1,3 @@
+fieldset[aria-hidden=true] {
+    display: none;
+}

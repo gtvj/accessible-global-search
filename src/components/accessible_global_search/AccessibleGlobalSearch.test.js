@@ -55,7 +55,13 @@ it('changes the form action to Discovery when that option is selected', () => {
     // Test that the component is updated in response to a change event
     // Have posted a question on Stack Overflow:
     // https://stackoverflow.com/questions/53026675/
+});
 
+it('updates the visibility of search options in response to change to the checkbox', () => {
+
+    // Test that the component is updated in response to a change event
+    // Have posted a question on Stack Overflow:
+    // https://stackoverflow.com/questions/53026675/
 });
 
 it(`contains a 'search-query' fieldset and legend with the correct text`, () => {
@@ -64,7 +70,7 @@ it(`contains a 'search-query' fieldset and legend with the correct text`, () => 
 
     const legend = fieldset.findByType('legend');
     expect(legend.type).toBe('legend');
-    expect(legend.children[0]).toBe(instance.state.search_query);
+    expect(legend.children[0]).toBe(instance.state.search_query_legend);
 });
 
 it(`contains a labelled search element with the correct properties`, () => {
@@ -73,6 +79,25 @@ it(`contains a labelled search element with the correct properties`, () => {
     expect(search_field.props.type).toBe('search'); // This tests the 'type' attribute
     expect(search_field.type).toBe('input');
     expect(search_field.props['aria-label']).toBe(instance.state.active_search.label);
+});
+
+it(`contains a checkbox that allows the user to view options for changing search destination`, () => {
+   const fieldset = test_instance.findByProps({id: 'show-search-options'});
+   expect(fieldset.type).toBe('fieldset');
+
+   const legend = fieldset.findByType('legend');
+   expect(legend.type).toBe('legend');
+   expect(legend.children[0]).toBe(instance.state.search_selector.label);
+
+   const checkbox = fieldset.findByType('input');
+   expect(checkbox.props.id).toBe(instance.state.search_selector.id);
+   expect(checkbox.props.type).toBe('checkbox');
+   expect(checkbox.props['aria-label']).toBe(instance.state.search_selector.label);
+
+   const label = fieldset.findByType('label');
+   expect(label.props.htmlFor).toBe(instance.state.search_selector.id);
+   expect(label.children[0]).toBe(instance.state.search_selector.label);
+
 });
 
 
