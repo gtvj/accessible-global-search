@@ -75,7 +75,7 @@ class AccessibleGlobalSearch extends Component {
                 </fieldset>
                 <fieldset id="search-query">
                     <legend>{this.state.search_query_legend}</legend>
-                    <input type="search" role="search" name="_q" aria-label={this.state.active_search.label}/>
+                    <input type="search" autoComplete="off" role="search" name="_q" aria-label={this.state.active_search.label}/>
                     <input type="submit"/>
                 </fieldset>
             </form>
